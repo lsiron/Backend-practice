@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="grey-bg">
+
+    <%- include('nav.ejs') %> <!-- 특수한 include 문법같은거 쓸 때 -->
+
+    <form class="form-box" action="/add" method="POST"> <!--form 쓰면 POST 요청 가능-->
+        <h4>글쓰기</h4>
+        <input name="title">
+        <input name="content">
+        <button type="submit">전송</button>
+    </form> 
+
+</body>
+</html>

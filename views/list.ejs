@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="grey-bg">
+
+    <%- include('nav.ejs') %> <!-- 특수한 include 문법같은거 쓸 때 -->
+
+    <div class="white-bg">
+    <% for (let i =0 ; i < posts.length; i += 1){ %>  <!-- 생 자바스크립트 문법 쓸 때 사용 --> 
+      <div class="list-box">
+        <h4><%= posts[i].title %></h4> <!-- %-와 기능이 거의 유사함 허나 %- 는 안에 있는 -->
+        <p><%= posts[i].content %></p> <!-- 데이터가 html 형식일 경우 실제 html처럼 인식함 반대로 %= 는 문자로 인식함. -->
+      </div>
+    <% } %>
+    </div> 
+  
+  </body>
+</html>
