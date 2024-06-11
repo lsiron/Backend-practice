@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body class="grey-bg">
 
     <%- include('nav.ejs') %> <!-- 특수한 include 문법같은거 쓸 때 -->
 
-    <form class="form-box" action="/add" method="POST"> <!--form 쓰면 POST 요청 가능-->
+    <form class="form-box" action="/write" method="POST"> <!--form 쓰면 POST 요청 가능, action URL로 POST 메서드를 통해 전송-->
         <h4>글쓰기</h4>
-        <input name="title">
+        <input name="title"> <!-- name 속성을 꼭 집어넣어야 함. 그래야 서버로 데이터 전송 가능-->
         <input name="content">
         <button type="submit">전송</button>
     </form> 

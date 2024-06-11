@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body class="grey-bg">
 
@@ -13,11 +13,52 @@
     <div class="white-bg">
     <% for (let i =0 ; i < posts.length; i += 1){ %>  <!-- 생 자바스크립트 문법 쓸 때 사용 --> 
       <div class="list-box">
-        <h4><%= posts[i].title %></h4> <!-- %-와 기능이 거의 유사함 허나 %- 는 안에 있는 -->
-        <p><%= posts[i].content %></p> <!-- 데이터가 html 형식일 경우 실제 html처럼 인식함 반대로 %= 는 문자로 인식함. -->
+        <h4><a href="/detail/<%= posts[i]._id %>">
+          <%= posts[i].title %>      <!-- %-와 기능이 거의 유사함 허나 %- 는 안에 있는 데이터가 html 형식일 경우 실제 html처럼 인식함 반대로 %= 는 문자로 인식함.-->
+        </a>
+      </h4> 
+        <p><%= posts[i].content %></p>
+        <button><a href="/edit/<%= posts[i]._id%>">edit</a></button>
+        <button><span class="delete" data-id="<%= posts[i]._id%>">delete</span></button> <!--data를 html에 숨기는 방법 : data-a=b a이름으로 b라는 데이터를 몰래 저장해주라는 뜻   -->
       </div>
-    <% } %>
+    <% } %> <!--자바스크립트로 표현한 부분은 전부 <% %> 로 감싸줄 것-->
     </div> 
-  
+
+    <a href="/list/next/<%= posts[posts.length-1]._id%>">다음</a>
+
+    <!--유저가 HTML 웹페이지에 조작을 가했을 때, 특정 코드를 실행하고 싶으면 script 태그를 쓰면 됨 script 안에서 ejs 문법은 문자 안에 담아야 함 -->
+    <script> 
+     // <html에 숨긴 데이터를 이용할 때 delete에 id 넣는 방법> , <ajax로 서버에 요청 날리는 방법-axios 라이브러리를 사용해도 가능함.>
+    for (let i = 0 ; i < '<%= posts.length %>'; i++ ){
+      document.querySelectorAll('.delete')[i]
+      .addEventListener('click', (e) => {
+        e.target.dataset.id                                       // e.target은 유저가 누른 html
+        fetch('/delete?docid=' + e.target.dataset.id, {           // fetch를 쓰면 서버로 get 요청을 날림, 내부적으로 ajax라는 기술을 써 주기 때문에 이를 쓰면 새로고침 없이 get요청을 날림 즉, 새로고침이 싫을 때 씀 
+          method: 'DELETE'                                        // 새로고침 없이 method 방법 사용가능    
+        })                                                        // <서버에서 html을 안 보내주고 데이터만 보내주는 방법으로 모달 창만 띄워서 CSR도 가능함>
+        .then((res)=>res.text())                                  // res가 서버가 보낸 데이터이다. 서버가 보내는게 문자일 경우 .text , obj나 arr 일 경우는 .json 을 써야함.
+        .then((res)=>{                                            // ajax 사용 시 서버가 보낸 데이터도 출력가능
+           e.target.parentElement.parentElement.style.display =   // 유저가 누른 button의 상위의 상위요소를 보이지 않게 설정.
+           'none'
+         })  
+        })
+       }
+
+        // <html에 숨긴 데이터를 이용하지 않았을 때 delete에 id 넣는 방법 - 글의 순서가 바꼈을 때 정확히 동작 안 할 수 있음>
+        // .addEventListener('click', () => {
+        //   fetch('/delete?docid' + <%= posts[0]._id %>, {
+        //     method: 'DELETE'
+        //   })
+        // })
+
+        // <fetch로 POST 메서드를 사용하여 서버로 데이터 전송 (request body 방식)> 
+        // fetch('/add', { 
+        //   method : 'POST' ,                
+        //   headers : {    // POST 요청을 할 때, 유저가 입력한 데이터 전송방법       
+        //     'Content-Type' : 'application/json'  // 기본 설정 추가               
+        //   },                                                                    
+        //   body : JSON.stringify({a : 1})      // 데이터 기입, 이 데이터가 POST 요청과 함께 날라감 , 지금 쓴 것은 object나 array 보내는 방법, 문자열은 그냥 '' 안에 입력하면 됨 
+        // })    
+    </script>
   </body>
 </html>

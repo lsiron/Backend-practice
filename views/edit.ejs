@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body class="grey-bg">
+
+    <%- include('nav.ejs') %> 
+
+    <form class="form-box" action="/edit?_method=PUT" method="POST"> <!--form 태그로 PUT요청을 할 때, method는 그대로 두고 action만 URL 뒤에 ?_method=PUT 를 붙여줌 그럼 method가 PUT으로 바뀜, 단 method-override 설치--> 
+        <h4>글쓰기</h4>
+        <input name="id" value="<%= result._id%>" style="display : none"> <!--유저가 ID를 만지면 안 되기 때문에 숨겨놓음-->
+        <input name="title" value="<%= result.title %>"> <!--value는 이미 채워진 글을 보여줌--> 
+        <input name="content" value="<%= result.content %>">
+        <button type="submit">전송</button>
+    </form> 
+    
+</body>
+</html>
