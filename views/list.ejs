@@ -8,23 +8,43 @@
 </head>
 <body class="grey-bg">
 
-    <%- include('nav.ejs') %> <!-- 특수한 include 문법같은거 쓸 때 -->
+    <%- include('nav.ejs') %> 
 
     <div class="white-bg">
-    <% for (let i =0 ; i < posts.length; i += 1){ %>  <!-- 생 자바스크립트 문법 쓸 때 사용 --> 
+    <% for (let i =0 ; i < posts.length; i += 1){ %>  
       <div class="list-box">
         <h4><a href="/detail/<%= posts[i]._id %>">
-          <%= posts[i].title %>      <!-- %-와 기능이 거의 유사함 허나 %- 는 안에 있는 데이터가 html 형식일 경우 실제 html처럼 인식함 반대로 %= 는 문자로 인식함.-->
+          <%= posts[i].title %>     
         </a>
       </h4> 
         <p><%= posts[i].content %></p>
         <button><a href="/edit/<%= posts[i]._id%>">edit</a></button>
         <button><span class="delete" data-id="<%= posts[i]._id%>">delete</span></button> <!--data를 html에 숨기는 방법 : data-a=b a이름으로 b라는 데이터를 몰래 저장해주라는 뜻   -->
       </div>
-    <% } %> <!--자바스크립트로 표현한 부분은 전부 <% %> 로 감싸줄 것-->
+    <% } %> 
     </div> 
 
-    <a href="/list/next/<%= posts[posts.length-1]._id%>">다음</a>
+    <div class="pagination">
+      <% if (hasPrev) { %>
+        <a href="/list/<%= currentPage - 1 %>">이전</a>
+      <% } else { %>
+        <span>이전</span>
+      <% } %>
+
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <% if (i === currentPage) { %>
+          <span><%= i %></span>
+        <% } else { %>
+          <a href="/list/<%= i %>"><%= i %></a>
+        <% } %>
+      <% } %>
+
+      <% if (hasNext) { %>
+        <a href="/list/<%= currentPage + 1 %>">다음</a>
+      <% } else { %>
+        <span>다음</span>
+      <% } %>
+    </div>
 
     <!--유저가 HTML 웹페이지에 조작을 가했을 때, 특정 코드를 실행하고 싶으면 script 태그를 쓰면 됨 script 안에서 ejs 문법은 문자 안에 담아야 함 -->
     <script> 
