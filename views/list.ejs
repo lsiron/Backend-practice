@@ -26,7 +26,7 @@
 
     <div class="pagination">
       <% if (hasPrev) { %>
-        <a href="/list/<%= currentPage - 1 %>">이전</a>
+        <a href="/list?page=<%= currentPage - 1 %>">이전</a>
       <% } else { %>
         <span>이전</span>
       <% } %>
@@ -35,12 +35,12 @@
         <% if (i === currentPage) { %>
           <span><%= i %></span>
         <% } else { %>
-          <a href="/list/<%= i %>"><%= i %></a>
+          <a href="/list?page=<%= i %>"><%= i %></a>
         <% } %>
       <% } %>
 
       <% if (hasNext) { %>
-        <a href="/list/<%= currentPage + 1 %>">다음</a>
+        <a href="/list?page=<%= currentPage + 1 %>">다음</a>
       <% } else { %>
         <span>다음</span>
       <% } %>
