@@ -1,9 +1,10 @@
+require('dotenv').config();                         // 이 줄을 추가하여 .env 파일에서 환경 변수를 로드
+
 const express = require('express')                  // express 라이브러리 불러오는 코드
 const app = express()                               // express 라이브러리 불러오는 코드
 const {ObjectId} = require('mongodb')               // new Object 쓰려면 필요함
 const methodOverride = require('method-override')   // form 태그를 이용하여 PUT,DELETE 요청을 할 때 'method-override'를 설치해줌
 const bcrypt = require('bcrypt')                    // bcrypt 라이브러리 불러오는 코드
-
 
 let connectDB = require('./database.js') 
 
@@ -27,7 +28,7 @@ app.use(session({
   cookie : {maxAge : 60  * 60 * 1000 },      // 세션을 1시간 동안 유지 해 줌
   store : MongoStore.create({                // 유저가 로그인 시 DB에 세션 doc 발행해 줌 - mongo-connect 사용법
     mongoUrl : process.env.DB_URL,
-    dbName : 'lsiron'
+    dbName : process.env.DB_NAME
   })
 }))
 
@@ -37,7 +38,7 @@ app.use(passport.session())
 let db;                               // mongoDB를 적용하는 방법
 connectDB.then((client)=>{
   console.log('DB연결성공')
-  db = client.db('lsiron')
+  db = client.db(process.env.DB_NAME)
   app.listen(process.env.PORT)        // 서버를 띄우는 코드
 }).catch((err)=>{
   console.log(err)
@@ -45,7 +46,7 @@ connectDB.then((client)=>{
 
 // 초기 페이지 이동
 app.get('/', (req, res) => {              
-  res.sendFile(__dirname + '/index.html') //응답을 파일로 보내는 방법
+  res.render('home.ejs') 
 })
 
 // 글 작성 페이지로 이동
