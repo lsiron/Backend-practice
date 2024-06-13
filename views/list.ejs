@@ -30,7 +30,7 @@
       <% } else { %>
         <span>이전</span>
       <% } %>
-
+    
       <% for (let i = 1; i <= totalPages; i++) { %>
         <% if (i === currentPage) { %>
           <span><%= i %></span>
@@ -38,7 +38,7 @@
           <a href="/list?page=<%= i %>"><%= i %></a>
         <% } %>
       <% } %>
-
+    
       <% if (hasNext) { %>
         <a href="/list?page=<%= currentPage + 1 %>">다음</a>
       <% } else { %>
@@ -63,22 +63,7 @@
          })  
         })
        }
-
-        // <html에 숨긴 데이터를 이용하지 않았을 때 delete에 id 넣는 방법 - 글의 순서가 바꼈을 때 정확히 동작 안 할 수 있음>
-        // .addEventListener('click', () => {
-        //   fetch('/delete?docid' + <%= posts[0]._id %>, {
-        //     method: 'DELETE'
-        //   })
-        // })
-
-        // <fetch로 POST 메서드를 사용하여 서버로 데이터 전송 (request body 방식)> 
-        // fetch('/add', { 
-        //   method : 'POST' ,                
-        //   headers : {    // POST 요청을 할 때, 유저가 입력한 데이터 전송방법       
-        //     'Content-Type' : 'application/json'  // 기본 설정 추가               
-        //   },                                                                    
-        //   body : JSON.stringify({a : 1})      // 데이터 기입, 이 데이터가 POST 요청과 함께 날라감 , 지금 쓴 것은 object나 array 보내는 방법, 문자열은 그냥 '' 안에 입력하면 됨 
-        // })    
+ 
     </script>
   </body>
 </html>
