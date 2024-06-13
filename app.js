@@ -22,13 +22,6 @@ app.set('view engine', 'ejs');                          // ejs 라이브러리 �
 app.use(express.json());                                // 유저가 데이터를 서버로 보내면 쉽게 꺼내 쓸 수 있도록 하는 코드 , 서버에서 req.body 쓰려면 필요함
 app.use(express.urlencoded({ extended: true }));        // 유저가 데이터를 서버로 보내면 쉽게 꺼내 쓸 수 있도록 하는 코드 , 서버에서 req.body 쓰려면 필요함
 
-app.use('/', authRoutes);                               // 유저관련 라우터 사용 
-app.use('/', postRoutes);                               // 게시글관련 라우터 사용 
-
-app.listen(process.env.PORT, () => {                    // 서버시작 코드
-  console.log('Server is running on port', process.env.PORT);
-});
-
 app.use(
   session({
     secret: '암호화에 쓸 비번',
@@ -41,9 +34,6 @@ app.use(
     }),
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 // 유저가 입력한 id와 pw 검사. 다른것도 검사 하려면 passReqToCallback 옵션 사용
@@ -85,5 +75,12 @@ passport.deserializeUser(async (user, done) => {
   }
 });
 
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use('/', authRoutes);                               // 유저관련 라우터 사용 
+app.use('/', postRoutes);                               // 게시글관련 라우터 사용 
 
+app.listen(process.env.PORT, () => {                    // 서버시작 코드
+  console.log('Server is running on port', process.env.PORT);
+});
